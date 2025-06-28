@@ -1,0 +1,58 @@
+PREFIX sch: <http://www.schema.org/>
+PREFIX : <http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#>
+
+SELECT (GROUP_CONCAT(REPLACE(STR(?course), ".*#", ""); separator=", ") AS ?passedCourses)
+       (COUNT(DISTINCT ?course) AS ?passedOptionalCount)
+		(sum(?credits) as ?TotalCredits)
+		((48 - sum(?credits)) /6 AS ?remainingOptionalCourses)
+WHERE {
+  {
+    # Match courses with type "Optional (OP)"
+    ?course a sch:Course ;
+            sch:additionalType "Optional (OP)" ;
+        	sch:numberOfCredits ?credits .
+    
+    # Check if the course has a lab
+    OPTIONAL {
+      ?course sch:hasPart ?lab .
+    }
+    
+    # Ensure the course is passed
+    FILTER EXISTS {
+      :exampleStudent1 :studentsCourse ?course .
+    }
+    
+    # If the course has a lab, ensure the lab is also passed
+    FILTER (!BOUND(?lab) || EXISTS {
+      :exampleStudent1 :studentsCourse ?lab .
+    })
+  }
+  UNION
+  {
+    # Match courses with type "Compulsory Optional (CO-OP)"
+    ?course a sch:Course ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            :inGroup ?courseGroup ;
+         	sch:numberOfCredits ?credits .
+    
+    # Match the student's chosen study group
+    :exampleStudent1 :inGroup ?studentGroup .
+    
+    # Include only courses not in the same group as the student's choice group
+    FILTER (?courseGroup != ?studentGroup)
+    
+    # Check if the course has a lab
+    OPTIONAL {
+      ?course sch:hasPart ?lab .
+    }
+    
+    # Ensure the course is passed
+    FILTER EXISTS {
+      :exampleStudent1 :studentsCourse ?course .
+    }
+    
+    # If the course has a lab, ensure the lab is also passed
+    FILTER (!BOUND(?lab) || EXISTS {
+      :exampleStudent1 :studentsCourse ?lab .
+    })
+    }}

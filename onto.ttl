@@ -1,0 +1,2490 @@
+@prefix : <http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sch: <http://www.schema.org/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#> .
+
+<http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy> rdf:type owl:Ontology ;
+                                                                     rdfs:comment "The model of the current program study." .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#qualifiedCardinality
+owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.schema.org/coursePrerequisites
+sch:coursePrerequisites rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf owl:topObjectProperty ;
+                        rdf:type owl:TransitiveProperty ;
+                        rdfs:domain sch:Course ;
+                        rdfs:range sch:Course ;
+                        rdfs:comment "Recommended prerequisites for this course." .
+
+
+###  http://www.schema.org/hasCourse
+sch:hasCourse rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :belongsTo ;
+              rdfs:domain sch:EducationalOccupationalProgram ;
+              rdfs:range sch:Course ;
+              rdfs:comment "The course that is offerd by this program study." .
+
+
+###  http://www.schema.org/hasPart
+sch:hasPart rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            owl:inverseOf sch:isPartOf ;
+            rdfs:domain sch:Course ;
+            rdfs:range sch:Course ;
+            rdfs:comment "Specifing the laboratory part of the course." .
+
+
+###  http://www.schema.org/isPartOf
+sch:isPartOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:comment "Specifing in which course is part of." .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#belongsTo
+:belongsTo rdf:type owl:ObjectProperty ;
+           rdfs:domain sch:Course ;
+           rdfs:range sch:EducationalOccupationalProgram ;
+           rdfs:comment "In which program study the course is offered." .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#studentsCourse
+:studentsCourse rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :Student ;
+                rdfs:range sch:Course ;
+                rdfs:comment "Students course." .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.schema.org/about
+sch:about rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain sch:Course ;
+          rdfs:range xsd:string ;
+          rdfs:comment "The scientific field from the course,possible values are \"Generic Knowledge and Skills (GKS), Programming and Algorithms (PA), Electronics (EL), Embedded Computation Systems (ECS), Communications and Networks (CN), Data Management - Artifial Inteligence (DMAI)\"." .
+
+
+###  http://www.schema.org/additionalType
+sch:additionalType rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain sch:Course ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "The category of the course, possible values are \"Compulsory (CO), Compulsory Optional (CO-OP), Optional (OP)\"." .
+
+
+###  http://www.schema.org/availableLanguage
+sch:availableLanguage rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain sch:Course ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "The available languages teaching and exam for the course." .
+
+
+###  http://www.schema.org/courseCode
+sch:courseCode rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain sch:Course ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Code of the course." .
+
+
+###  http://www.schema.org/courseMode
+sch:courseMode rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain sch:Course ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Specifing that the course is a laboratory." .
+
+
+###  http://www.schema.org/educationalLevel
+sch:educationalLevel rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain [ rdf:type owl:Class ;
+                                   owl:unionOf ( sch:Course
+                                                 sch:EducationalOccupationalProgram
+                                               )
+                                 ] ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "Can refer to the semester that the course belongs or the EQF level from the program study." .
+
+
+###  http://www.schema.org/hasCredential
+sch:hasCredential rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain sch:EducationalOccupationalProgram ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "The amount of ECTS student take by graduate." .
+
+
+###  http://www.schema.org/learningResourceType
+sch:learningResourceType rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         rdfs:domain sch:Course ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The course type, possible values are \"General Background (GB), Special Background (SB), General Background - Skills Development (GB-SD), Scientific Area - Skills Development (SA-SD), Scientific Area (SA), Specialization - Skills Development (SP-SD), Specialization (SP), Skills Development (SD)\"." .
+
+
+###  http://www.schema.org/name
+sch:name rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( sch:Course
+                                     sch:EducationalOccupationalProgram
+                                   )
+                     ] ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Full name." .
+
+
+###  http://www.schema.org/numberOfCredits
+sch:numberOfCredits rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain sch:Course ;
+                    rdfs:range xsd:int ;
+                    rdfs:comment "The amount of credits student can take from passing the course." .
+
+
+###  http://www.schema.org/programPrerequisites
+sch:programPrerequisites rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         rdfs:domain sch:EducationalOccupationalProgram ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The prerequisites for somone in order to start this program." .
+
+
+###  http://www.schema.org/repeatFrequency
+sch:repeatFrequency rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain sch:Course ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "The frequency of the course taught." .
+
+
+###  http://www.schema.org/timeRequired
+sch:timeRequired rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain sch:Course ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The hours needed every week for the course." .
+
+
+###  http://www.schema.org/timeToComplete
+sch:timeToComplete rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain sch:EducationalOccupationalProgram ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Time in years need to complete this program study." .
+
+
+###  http://www.schema.org/url
+sch:url rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( sch:Course
+                                    sch:EducationalOccupationalProgram
+                                  )
+                    ] ;
+        rdfs:range xsd:anyURI ;
+        rdfs:comment "Source url for more info." .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#inGroup
+:inGroup rdf:type owl:DatatypeProperty ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( sch:Course
+                                     :Student
+                                   )
+                     ] ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Specifing the group." .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.schema.org/Course
+sch:Course rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty sch:courseCode ;
+                             owl:someValuesFrom xsd:string
+                           ] .
+
+
+###  http://www.schema.org/EducationalOccupationalProgram
+sch:EducationalOccupationalProgram rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#CoCourse
+:CoCourse rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty sch:additionalType ;
+                                owl:hasValue "Compulsory (CO)"
+                              ] ;
+          rdfs:subClassOf sch:Course .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#ElesCourse
+:ElesCourse rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                         owl:complementOf :Student
+                                                       ]
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty :inGroup ;
+                                                         owl:hasValue "ELES"
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:subClassOf sch:Course .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#OptionalCourse
+:OptionalCourse rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                      owl:onProperty sch:additionalType ;
+                                      owl:hasValue "Optional (OP)"
+                                    ] ;
+                rdfs:subClassOf sch:Course .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#PdaiCourse
+:PdaiCourse rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                         owl:complementOf :Student
+                                                       ]
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty :inGroup ;
+                                                         owl:hasValue "PDAI"
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:subClassOf sch:Course .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Student
+:Student rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1101
+:Course1101 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1101" ;
+            sch:educationalLevel "First Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Mathematics I" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=31"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1102
+:Course1102 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:hasPart :Lab1102 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1102" ;
+            sch:educationalLevel "First Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "Structured Programming" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~gouliana/dom_progr.html"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1103
+:Course1103 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1103" ;
+            sch:educationalLevel "First Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Introduction to computer science" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=33"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1104
+:Course1104 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1104" ;
+            sch:educationalLevel "First Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "Electronic Physics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3564"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1105
+:Course1105 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1105" ;
+            sch:educationalLevel "First Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "DC Circuits" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1201
+:Course1201 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1201" ;
+            sch:educationalLevel "Second Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "Mathematics II" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=19"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1202
+:Course1202 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1105 ;
+            sch:hasPart :Lab1202 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1202" ;
+            sch:educationalLevel "Second Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "Measurements and Alternating Current Circuits" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1203
+:Course1203 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:hasPart :Lab1203 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1203" ;
+            sch:educationalLevel "Second Semester" ;
+            sch:learningResourceType "General Background - Skills Development (GB-SD)" ;
+            sch:name "Technical Writing, Presentation and Terminology of Foreign Language" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=68"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1204
+:Course1204 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:hasPart :Lab1204 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1204" ;
+            sch:educationalLevel "Second Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Digital System Design" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1205
+:Course1205 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ;
+            sch:hasPart :Lab1205 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1205" ;
+            sch:educationalLevel "Second Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Object Oriented Programming" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=75"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1301
+:Course1301 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1301" ;
+            sch:educationalLevel "Third Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Probability Theory and Statistics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1302
+:Course1302 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1302" ;
+            sch:educationalLevel "Third Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Mathematics ΙΙI" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=32"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1303
+:Course1303 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ,
+                                    :Course1201 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1303" ;
+            sch:educationalLevel "Third Semester" ;
+            sch:learningResourceType "Special Background (SB)" ;
+            sch:name "Signal Processing" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1304
+:Course1304 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1103 ;
+            sch:hasPart :Lab1304 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1304" ;
+            sch:educationalLevel "Fourth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Computer System Organization and Architecture" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://www.iee.ihu.gr/~kdiamant/index.php?l=el&p=coa"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1305
+:Course1305 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1205 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1305" ;
+            sch:educationalLevel "Third Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Data Structures and Analysis of Algorithms" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=81"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1401
+:Course1401 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1305 ;
+            sch:hasPart :Lab1401 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1401" ;
+            sch:educationalLevel "Fourth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Database Management Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://www.iee.ihu.gr/~kdiamant/index.php?l=el&p=coa"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1402
+:Course1402 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1104 ,
+                                    :Course1301 ,
+                                    :Course1303 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1402" ;
+            sch:educationalLevel "Fourth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Telecommunication Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1403
+:Course1403 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1103 ;
+            sch:hasPart :Lab1403 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1403" ;
+            sch:educationalLevel "Fourth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Introduction to Operating Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://1403.iee.ihu.gr/"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1404
+:Course1404 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1202 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1404" ;
+            sch:educationalLevel "Fourth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Electronic Circuits" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1405
+:Course1405 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ;
+            sch:hasPart :Lab1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1405" ;
+            sch:educationalLevel "Third Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Web Languages and Technologies" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://sites.google.com/site/gtiteithe/"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1501
+:Course1501 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1104 ,
+                                    :Course1402 ;
+            sch:hasPart :Lab1501 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1501" ;
+            sch:educationalLevel "Fifth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Wireless Communications" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1502
+:Course1502 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1204 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1502" ;
+            sch:educationalLevel "Fifth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Microcontrollers" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1503
+:Course1503 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1103 ,
+                                    :Course1403 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1503" ;
+            sch:educationalLevel "Fifth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Operating Systems Design" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3573"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1504
+:Course1504 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1404 ;
+            sch:hasPart :Lab1504 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1504" ;
+            sch:educationalLevel "Fifth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Electronic Devices" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1505
+:Course1505 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1103 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1505" ;
+            sch:educationalLevel "Fifth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Human Machine Interaction" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3571"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1601
+:Course1601 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1305 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1601" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Artificial Intelligence" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=100"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1602
+:Course1602 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1204 ,
+                                    :Course1502 ;
+            sch:hasPart :Lab1602 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1602" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Embedded Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1611
+:Course1611 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1204 ,
+                                    :Course1404 ,
+                                    :Course1504 ;
+            sch:hasPart :Lab1611 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1611" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Synthesis of electronic circuits" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1612
+:Course1612 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ,
+                                    :Course1104 ,
+                                    :Course1201 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1612" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Quantum Computing" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1613
+:Course1613 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1504 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1613" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Microelectronic Circuit Design Methodologies" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1641
+:Course1641 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ,
+                                    :Course1102 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1641" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Numerical Methods" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~gouliana/aa_theory.html"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1642
+:Course1642 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1505 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1642" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Advanced Topics of Human Computer Interaction (Mobile Programming)" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1643
+:Course1643 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1643" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "General Background (GB)" ;
+            sch:name "Project Management" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~vkostogl/lessons.html"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1671
+:Course1671 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1501 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1671" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Microwave Technology and Remote Sensing" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1672
+:Course1672 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ,
+                                    :Course1104 ,
+                                    :Course1201 ;
+            sch:hasPart :Lab1672 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1672" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Optoelectronics and Optical Communications" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1673
+:Course1673 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1303 ,
+                                    :Course1501 ;
+            sch:hasPart :Lab1673 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1673" ;
+            sch:educationalLevel "Sixth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Mass Media Communication Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1701
+:Course1701 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1402 ;
+            sch:hasPart :Lab1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1701" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Computer Networks" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "http://aetos.it.teithe.gr/~vitsas/page6.htm"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1702
+:Course1702 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1202 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1702" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Power Electronics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1711
+:Course1711 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1201 ,
+                                    :Course1303 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1711" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Control Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3581"^^xsd:anyURI ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1712
+:Course1712 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1611 ;
+            sch:hasPart :Lab1712 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1712" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Sensors Signal Conditioning" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1713
+:Course1713 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1711 ;
+            sch:hasPart :Lab1713 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1713" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Programmable Logic Controllers" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            sch:url "https://www.iee.ihu.gr/course/1713/"^^xsd:anyURI ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1714
+:Course1714 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1204 ,
+                                    :Course1504 ;
+            sch:hasPart :Lab1714 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1714" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Design of Reconfigurable Digital Systems (FPGAs)" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1741
+:Course1741 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1301 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1741" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Introduction to Data Analytics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1742
+:Course1742 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1205 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1742" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Software Engineering" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1743
+:Course1743 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1401 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1743" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Database Technology" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3576"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1744
+:Course1744 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1304 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1744" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Advanced Computer Architecture and Parallel System Programming" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~kdiamant/index.php?l=el&p=cap"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1771
+:Course1771 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1303 ;
+            sch:hasPart :Lab1771 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1771" ;
+            sch:educationalLevel "Seventh Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Audio and Image Technologies" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1801
+:Course1801 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1801" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Information Security" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=4175"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1802
+:Course1802 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1101 ,
+                                    :Course1201 ,
+                                    :Course1301 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1802" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Machine Learning Principles and Methods" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1803
+:Course1803 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1303 ,
+                                    :Course1402 ,
+                                    :Course1501 ,
+                                    :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1803" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Internet of Things" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1811
+:Course1811 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1711 ;
+            sch:hasPart :Lab1811 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1811" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Applications of Control Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1812
+:Course1812 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1702 ;
+            sch:hasPart :Lab1812 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1812" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Power Converters" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+            
+            
+ ###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1838
+:Course1838 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1702 ;
+            sch:hasPart :Lab1838 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1838" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Scientific Area (SA)" ;
+            sch:name "Application of power systems and RES" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .           
+            
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1839
+:Course1839 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1702 ;
+            sch:hasPart :Lab1839 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1839" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Motor drives and smart grid" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1841
+:Course1841 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1741 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1841" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Data Organization and Data Mining" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=103"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1842
+:Course1842 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1842" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Added-Value Internet Services" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=4166"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1871
+:Course1871 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1501 ,
+                                    :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1871" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Motor drives and smart grid" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "http://aetos.it.teithe.gr/~vitsas/page6.htm"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1872
+:Course1872 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1701 ;
+            sch:hasPart :Lab1872 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1872" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Special Network Topics (CCNA) 1" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            sch:url "https://www.netacad.com/"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1873
+:Course1873 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1873" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Advanced Networking Topics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1874
+:Course1874 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1501 ,
+                                    :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1874" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Mobile Communication Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1911
+:Course1911 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1502 ,
+                                    :Course1602 ;
+            sch:hasPart :Lab1911 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1911" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Applications of Embedded Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1912
+:Course1912 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1602 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1912" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Robotics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1913
+:Course1913 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1812 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1913" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Renewable energy sources and smart grid" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1914
+:Course1914 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1505 ,
+                                    :Course1602 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Embedded Computation Systems (ECS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1914" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Tangible User Interfaces" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1915
+:Course1915 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1712 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1915" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Biomedical Technology" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1916
+:Course1916 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1502 ,
+                                    :Course1504 ;
+            sch:hasPart :Lab1916 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Electronics (EL)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1916" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Computer Assisted Measurement Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" ;
+            :inGroup "ELES" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1941
+:Course1941 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1941" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Development of Web Systems and Applications" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://1941.iee.ihu.gr"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1942
+:Course1942 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1301 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1942" ;
+            sch:courseMode "SimpleCourse" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Operational Research" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~vkostogl/lessons.html"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1943
+:Course1943 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1401 ,
+                                    :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1943" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Information Retrieval – Search Engines" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://sites.google.com/view/ihu-iee-ir"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1944
+:Course1944 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1401 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "English" ,
+                                  "Greek" ;
+            sch:courseCode "1944" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "DBMS Systems and Services Administration" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1945
+:Course1945 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1601 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1945" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Intelligent Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=74"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1946
+:Course1946 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1601 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1946" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Artificial Intelligence – Advanced Topics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://exams-iee.the.ihu.gr/course/view.php?id=94"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1947
+:Course1947 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1802 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Data Management - Artifial Inteligence (DMAI)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1947" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Advanced Machine Learning" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://aetos.it.teithe.gr/~kdiamant/index.php?l=el&p=aml"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1948
+:Course1948 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1948" ;
+            sch:educationalLevel "Eighth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Development of Large Software Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://sites.google.com/view/adopse-iee-dipae/"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1949
+:Course1949 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1205 ,
+                                    :Course1701 ,
+                                    :Course1744 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1949" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Distributed Systems" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1950
+:Course1950 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1405 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1950" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Semantic Web" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            sch:url "https://moodle.teithe.gr/course/view.php?id=3588"^^xsd:anyURI ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1969
+:Course1969 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1302 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Programming and Algorithms (PA)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1969" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Computer Graphics" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" ;
+            :inGroup "PDAI" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1970
+:Course1970 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1970" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Skills Development (SD)" ;
+            sch:name "Work Placement" ;
+            sch:numberOfCredits 12 .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1971
+:Course1971 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1701 ,
+                                    :Course1801 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1971" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Network and Communication Security" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1972
+:Course1972 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1102 ,
+                                    :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1972" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Software Defined Networking" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1973
+:Course1973 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1872 ;
+            sch:hasPart :Lab1973 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1973" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization - Skills Development (SP-SD)" ;
+            sch:name "Special Network Topics (CCNA) 2" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1974
+:Course1974 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1501 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1974" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Satellite Communications" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1975
+:Course1975 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            sch:coursePrerequisites :Course1505 ,
+                                    :Course1701 ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Communications and Networks (CN)" ;
+            sch:additionalType "Optional (OP)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1975" ;
+            sch:educationalLevel "Ninth Semester" ;
+            sch:learningResourceType "Specialization (SP)" ;
+            sch:name "Multimedia Technology" ;
+            sch:numberOfCredits 6 ;
+            sch:repeatFrequency "Weekly" ;
+            sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Course1999
+:Course1999 rdf:type owl:NamedIndividual ,
+                     sch:Course ;
+            :belongsTo :currentProgramStudy ;
+            sch:about "Generic Knowledge and Skills (GKS)" ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:availableLanguage "Greek" ;
+            sch:courseCode "1999" ;
+            sch:educationalLevel "Tenth Semester" ;
+            sch:learningResourceType "Scientific Area - Skills Development (SA-SD)" ;
+            sch:name "Thesis" ;
+            sch:numberOfCredits 30 .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1102
+:Lab1102 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Structured Programming Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1202
+:Lab1202 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Measurements and Alternating Current Circuits Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1203
+:Lab1203 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Technical Writing, Presentation and Terminology of Foreign Language Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1204
+:Lab1204 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Digital System Design Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1205
+:Lab1205 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Object Oriented Programming Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1304
+:Lab1304 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Computer System Organization and Architecture Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1401
+:Lab1401 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Database Management Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1403
+:Lab1403 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Introduction to Operating Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1405
+:Lab1405 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Web Languages and Technologies Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT1H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1501
+:Lab1501 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Wireless Communications Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1504
+:Lab1504 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Electronic Devices Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1602
+:Lab1602 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Embedded Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1611
+:Lab1611 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Synthesis of electronic circuits Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1672
+:Lab1672 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Optoelectronics and Optical Communications Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1673
+:Lab1673 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Mass Media Communication Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1701
+:Lab1701 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Computer Networks Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1712
+:Lab1712 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Sensors Signal Conditioning Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1713
+:Lab1713 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Programmable Logic Controllers Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1714
+:Lab1714 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Design of Reconfigurable Digital Systems (FPGAs) Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1771
+:Lab1771 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Audio and Image Technologies Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1811
+:Lab1811 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Applications of Control Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1812
+:Lab1812 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Power Converters Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1838
+:Lab1838 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Application of power systems and RES Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+         
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1839
+:Lab1839 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Motor drives and smart grid Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1872
+:Lab1872 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Special Network Topics (CCNA) 1 Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1911
+:Lab1911 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Applications of Embedded Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1916
+:Lab1916 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Computer Assisted Measurement Systems Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT2H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#Lab1973
+:Lab1973 rdf:type owl:NamedIndividual ,
+                  sch:Course ;
+         sch:courseMode "Laboratory" ;
+         sch:name "Special Network Topics (CCNA) 2 Laboratory" ;
+         sch:repeatFrequency "Weekly" ;
+         sch:timeRequired "PT4H" .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#currentProgramStudy
+:currentProgramStudy rdf:type owl:NamedIndividual ,
+                              sch:EducationalOccupationalProgram ;
+                     sch:educationalLevel "Level 6 European Qualifications Framework (EQF)" ;
+                     sch:hasCredential "300 European Credit Transfer and Accumulation System(ECTS)" ;
+                     sch:name "Under Graduate Program Study of Information Engineering and Electronic Systems Department(2019)" ;
+                     sch:programPrerequisites "High school diploma" ;
+                     sch:timeToComplete "P5Y" ;
+                     sch:url "https://www.iee.ihu.gr/"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#exampleStudent
+:exampleStudent rdf:type owl:NamedIndividual ,
+                         :Student ;
+                :studentsCourse :Course1101 ,
+                                :Course1102 ,
+                                :Course1103 ,
+                                :Course1671 ,
+                                :Lab1673 ;
+                :inGroup "ELES" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( sch:Course
+                sch:EducationalOccupationalProgram
+                :Student
+              )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+:s rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:c rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:l rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:type rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:cgroup rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:sgroup rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των υποχρεωτικών μαθημάτων μέσο της ιδιότητας studentsCourse." ;
+   rdfs:label "S1" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :c
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:additionalType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :type
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first :type ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Compulsory (CO)" ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :c
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των θεωριών μέσο της ιδιότητας studentsCourse για όλα τα υπόλοιπα μαθήματα που έχει περαστεί το εργαστήριο." ;
+   rdfs:label "S6" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :l
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:isPartOf ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :l ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :c
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :c
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των εργαστηρίων μέσο της ιδιότητας studentsCourse για όλα τα υπόλοιπα μαθήματα που έχει περαστεί το θεωριτκό μέρος." ;
+   rdfs:label "S5" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :c
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:hasPart ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> :c
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των υποχρεωτικών εργαστηρίων ομάδας μέσο της ιδιότητας studentsCourse." ;
+   rdfs:label "S4" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :c
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:additionalType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :type
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first :type ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Compulsory Optional (CO-OP)" ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> :inGroup ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> :cgroup
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> :inGroup ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> :sgroup
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#arguments> ( :sgroup
+                                                                                                                                                                      :cgroup
+                                                                                                                                                                    )
+                                                                                                                       ] ;
+                                                                                                             rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                        rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:hasPart ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                                                                                                  ] ;
+                                                                                                                        rdf:rest rdf:nil
+                                                                                                                      ]
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των υποχρεωτικών εργαστηρίων μέσο της ιδιότητας studentsCourse." ;
+   rdfs:label "S2" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :c
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:additionalType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :type
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first :type ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Compulsory (CO)" ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:hasPart ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                                                                 ] ;
+                                                                                       rdf:rest rdf:nil
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :l
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Σύνδεση των υποχρεωτικών μαθημάτων ομάδας μέσο της ιδιότητας studentsCourse." ;
+   rdfs:label "S3" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Student ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> sch:Course ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :c
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sch:additionalType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :type
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first :type ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Compulsory Optional (CO-OP)" ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> :inGroup ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> :c ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> :cgroup
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> :inGroup ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> :sgroup
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#equal> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#arguments> ( :sgroup
+                                                                                                                                                                      :cgroup
+                                                                                                                                                                    )
+                                                                                                                       ] ;
+                                                                                                             rdf:rest rdf:nil
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :studentsCourse ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :s ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :c
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -1,0 +1,65 @@
+PREFIX sch: <http://www.schema.org/>
+PREFIX : <http://www.semanticweb.org/giannis/ontologies/2025/0/ProgramStudy#>
+
+SELECT DISTINCT ?Course ?category
+WHERE {
+  {
+    # CO unpassed
+    ?Course a sch:Course ;
+            sch:additionalType "Compulsory (CO)" .
+    FILTER NOT EXISTS { :exampleStudent1 :studentsCourse ?Course . }
+    BIND("CO unpassed" AS ?category)
+  }
+  UNION
+  {
+    # CO unpassed labs
+    ?course a sch:Course ;
+            sch:additionalType "Compulsory (CO)" ;
+            sch:hasPart ?Course .
+    FILTER NOT EXISTS { :exampleStudent1 :studentsCourse ?Course . }
+    BIND("CO unpassed" AS ?category)
+  }
+     UNION
+  {
+    # GroupCO unpassed
+    ?Course a sch:Course ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            :inGroup ?group .
+    :exampleStudent1 :inGroup ?group .
+    FILTER NOT EXISTS { :exampleStudent1 :studentsCourse ?Course . }
+    BIND("GroupCO unpassed" AS ?category)
+  }
+  UNION
+  {
+    # GroupCO unpassed labs
+    ?course a sch:Course ;
+            sch:additionalType "Compulsory Optional (CO-OP)" ;
+            :inGroup ?group ;
+            sch:hasPart ?Course .
+    :exampleStudent1 :inGroup ?group .
+    FILTER NOT EXISTS { :exampleStudent1 :studentsCourse ?Course . }
+    BIND("GroupCO unpassed" AS ?category)
+  }
+ 
+      UNION
+  {
+    # Remaining Optional parts
+    ?course a sch:Course ;
+            sch:additionalType ?type ;
+            sch:hasPart ?lab .
+    VALUES ?type { "Optional (OP)" "Compulsory Optional (CO-OP)" }
+    
+    # Match Optional (OP) or CO-OP in other groups
+    OPTIONAL { ?course :inGroup ?courseGroup . }
+    :exampleStudent1 :inGroup ?studentGroup .
+   FILTER (!BOUND(?courseGroup) || ?courseGroup != ?studentGroup || ((?type="Optional (OP)")&&(?courseGroup = ?studentGroup)))
+    # Remaining parts logic
+    FILTER (
+      (EXISTS { :exampleStudent1 :studentsCourse ?course } && NOT EXISTS { :exampleStudent1 :studentsCourse ?lab }) ||
+      (EXISTS { :exampleStudent1 :studentsCourse ?lab } && NOT EXISTS { :exampleStudent1 :studentsCourse ?course })
+    )
+    BIND(IF(EXISTS { :exampleStudent1 :studentsCourse ?course }, ?lab, ?course) AS ?Course)
+    BIND("Optional unpassed" AS ?category)
+  }
+
+}
